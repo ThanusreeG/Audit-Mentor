@@ -1,0 +1,1 @@
+ALTER TABLE "Vulnerability" ADD COLUMN "appGuided" BOOLEAN NOT NULL DEFAULT false;

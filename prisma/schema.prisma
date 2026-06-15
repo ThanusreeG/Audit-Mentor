@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AuditSession {
+  id              String           @id @default(cuid())
+  createdAt       DateTime         @default(now())
+  contractSource  String
+  contractType    String?
+  riskScore       Float?
+  riskReasons     String?
+  detectedSignals String?
+  userSummary     String?
+  vulnerabilities Vulnerability[]
+  attempts        GuessAttempt[]
+}
+
+model Vulnerability {
+  id               String       @id @default(cuid())
+  sessionId        String
+  ordinal          Int
+  title            String
+  severity         String
+  codeSnippet      String
+  explanation      String
+  attackScenario   String
+  impact           String
+  fix              String
+  learningNote     String
+  hint1            String
+  hint2            String
+  hint3            String
+  matchKeywords    String
+  resolved         Boolean      @default(false)
+  hintsUsed        Int          @default(0)
+  identifiedByUser Boolean      @default(false)
+  appGuided        Boolean      @default(false)
+  identifiedHow    String?
+  solvedAtHintLevel Int?
+  wrongGuessCount  Int          @default(0)
+  revealedAfterWrong Boolean    @default(false)
+  revealedAfterBlank Boolean    @default(false)
+  session          AuditSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+model GuessAttempt {
+  id              String       @id @default(cuid())
+  sessionId       String
+  vulnerabilityId String?
+  userInput       String
+  correct         Boolean
+  createdAt       DateTime     @default(now())
+  session         AuditSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
