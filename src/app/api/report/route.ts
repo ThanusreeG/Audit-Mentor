@@ -11,7 +11,7 @@ type ReportQualitative = {
 };
 
 export async function POST(request: Request) {
-  const body = (await request.json().catch(() => null)) as { sessionId?: string; llmBaseUrl?: string } | null;
+  const body = (await request.json().catch(() => null)) as { sessionId?: string } | null;
   if (!body?.sessionId) return NextResponse.json({ ok: false, error: "Missing sessionId" }, { status: 400 });
 
   const session = await prisma.auditSession.findUnique({
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
           })
         }
       ],
-      { route: "/api/report", maxTokens: 1800, baseUrl: body.llmBaseUrl }
+      { route: "/api/report", maxTokens: 1800 }
     );
 
     return NextResponse.json({

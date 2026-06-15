@@ -119,7 +119,7 @@ NEXT_PUBLIC_API_BASE_URL=https://YOUR_BACKEND_TUNNEL
 PAGES_BASE_PATH=/YOUR_REPO
 ```
 
-The app also has a "Backend" status button in the header, so you can change the API base URL in the browser without rebuilding the frontend.
+The app shows backend reachability in the header, but users cannot change the backend URL in the browser. Update `NEXT_PUBLIC_API_BASE_URL` in GitHub variables and redeploy when the tunnel URL changes.
 
 ## Deployment Notes
 

@@ -21,7 +21,6 @@ export async function POST(request: Request) {
         explanation?: string;
         reveal?: { code?: string; explanation?: string };
       };
-      llmBaseUrl?: string;
     } | null;
 
     if (!body?.vulnerability || typeof body.guess !== "string" || !body.guess.trim()) {
@@ -55,8 +54,7 @@ Is this guess correct?`
       temperature: 0,
       maxTokens: 512,
       timeoutMs: LLM_DEFAULTS.timeoutMs,
-      stop: LLM_DEFAULTS.stop,
-      baseUrl: body.llmBaseUrl
+      stop: LLM_DEFAULTS.stop
     });
 
     if (result.ok) {

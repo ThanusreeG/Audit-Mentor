@@ -14,7 +14,6 @@ export async function POST(request: Request) {
     sessionId?: string;
     vulnerabilityOrdinal?: number | null;
     level?: HintLevel;
-    llmBaseUrl?: string;
   } | null;
   if (!body?.sessionId || !body.level) {
     return NextResponse.json({ ok: false, error: "Missing sessionId or hint level" }, { status: 400 });
@@ -59,8 +58,7 @@ Generate hint level ${body.level}.`;
     temperature: LLM_DEFAULTS.temperature,
     maxTokens: 512,
     timeoutMs: LLM_DEFAULTS.timeoutMs,
-    stop: LLM_DEFAULTS.stop,
-    baseUrl: body.llmBaseUrl
+    stop: LLM_DEFAULTS.stop
   });
 
   if (result.ok) {

@@ -15,7 +15,6 @@ export async function POST(request: Request) {
     vulnerabilityOrdinal?: number;
     userInput?: string;
     hintLevel?: 1 | 2 | 3;
-    llmBaseUrl?: string;
   } | null;
 
   if (!body?.sessionId || !body.vulnerabilityOrdinal || !body.hintLevel) {
@@ -57,8 +56,7 @@ Is this guess correct?`
     temperature: 0,
     maxTokens: 512,
     timeoutMs: LLM_DEFAULTS.timeoutMs,
-    stop: LLM_DEFAULTS.stop,
-    baseUrl: body.llmBaseUrl
+    stop: LLM_DEFAULTS.stop
   });
 
   const judgment = result.ok ? parseJudge(result.content) : null;

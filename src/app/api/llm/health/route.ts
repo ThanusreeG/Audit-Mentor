@@ -16,16 +16,15 @@ export async function GET(request: Request) {
     });
   }
 
-  const url = new URL(request.url);
-  const baseUrl = url.searchParams.get("baseUrl") || undefined;
+  void request.url;
   const model = REQUIRED_LLM_MODEL;
-  await probeHealth(baseUrl, model);
-  await probeHint(baseUrl, model);
-  await probeCheckGuess(baseUrl, model);
+  await probeHealth(model);
+  await probeHint();
+  await probeCheckGuess();
   return NextResponse.json({ ok: getLlmHealthSnapshot().overall !== "down", model, ...getLlmHealthSnapshot() });
 }
 
-async function probeHealth(baseUrl?: string, model?: string) {
+async function probeHealth(model?: string) {
   const result = await chatCompletion({
     callerTag: "health",
     messages: [
@@ -39,8 +38,7 @@ async function probeHealth(baseUrl?: string, model?: string) {
     temperature: LLM_DEFAULTS.temperature,
     maxTokens: 512,
     timeoutMs: LLM_DEFAULTS.timeoutMs,
-    stop: LLM_DEFAULTS.stop,
-    baseUrl
+    stop: LLM_DEFAULTS.stop
   });
 
   if (result.ok) {
@@ -67,7 +65,7 @@ async function probeHealth(baseUrl?: string, model?: string) {
   });
 }
 
-async function probeHint(baseUrl?: string, model?: string) {
+async function probeHint() {
   const result = await chatCompletion({
     callerTag: "hint:health-probe",
     messages: [
@@ -81,13 +79,12 @@ async function probeHint(baseUrl?: string, model?: string) {
     temperature: LLM_DEFAULTS.temperature,
     maxTokens: 512,
     timeoutMs: LLM_DEFAULTS.timeoutMs,
-    stop: LLM_DEFAULTS.stop,
-    baseUrl
+    stop: LLM_DEFAULTS.stop
   });
   markLlmRoute("hint", result.ok ? { ok: true, status: 200, latencyMs: result.latencyMs, rawResponse: result.content.slice(0, 500) } : { ok: false, status: result.status || 0, latencyMs: result.latencyMs, lastError: result.error, rawResponse: result.body });
 }
 
-async function probeCheckGuess(baseUrl?: string, model?: string) {
+async function probeCheckGuess() {
   const result = await chatCompletion({
     callerTag: "check-guess:health-probe",
     messages: [
@@ -101,8 +98,7 @@ async function probeCheckGuess(baseUrl?: string, model?: string) {
     temperature: 0,
     maxTokens: 512,
     timeoutMs: LLM_DEFAULTS.timeoutMs,
-    stop: LLM_DEFAULTS.stop,
-    baseUrl
+    stop: LLM_DEFAULTS.stop
   });
   markLlmRoute("checkGuess", result.ok ? { ok: true, status: 200, latencyMs: result.latencyMs, rawResponse: result.content.slice(0, 500) } : { ok: false, status: result.status || 0, latencyMs: result.latencyMs, lastError: result.error, rawResponse: result.body });
 }

@@ -11,7 +11,6 @@ export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as {
     vulnerability?: { title: string; severity: string; codeSnippet?: string; explanation?: string; reveal?: { code?: string; explanation?: string } };
     level?: 1 | 2 | 3;
-    llmBaseUrl?: string;
   } | null;
 
   if (!body?.vulnerability || !body.level) {
@@ -46,8 +45,7 @@ Generate hint level ${body.level}.`;
     temperature: LLM_DEFAULTS.temperature,
     maxTokens: 512,
     timeoutMs: LLM_DEFAULTS.timeoutMs,
-    stop: LLM_DEFAULTS.stop,
-    baseUrl: body.llmBaseUrl
+    stop: LLM_DEFAULTS.stop
   });
 
   if (!result.ok) {

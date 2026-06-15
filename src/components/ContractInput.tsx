@@ -41,7 +41,7 @@ export default function ContractInput() {
       const response = await apiFetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contractSource, ...getLlmSettings() })
+        body: JSON.stringify({ contractSource })
       });
       const data = await response.json();
 
@@ -171,11 +171,4 @@ function formatAnalysisError(message: string) {
   }
 
   return message;
-}
-
-function getLlmSettings() {
-  if (typeof window === "undefined") return {};
-  return {
-    llmBaseUrl: window.localStorage.getItem("llmBaseUrl") || undefined
-  };
 }

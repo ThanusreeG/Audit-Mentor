@@ -15,7 +15,6 @@ export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as {
     sessionId?: string;
     summary?: string;
-    llmBaseUrl?: string;
   } | null;
   if (!body?.sessionId) return NextResponse.json({ ok: false, error: "Missing sessionId" }, { status: 400 });
 
@@ -69,8 +68,7 @@ ${body.summary}`
         callerTag: "summary-review",
         temperature: 0.2,
         maxTokens: 800,
-        timeoutMs: 35_000,
-        baseUrl: body.llmBaseUrl
+        timeoutMs: 35_000
       }
     );
 

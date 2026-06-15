@@ -39,7 +39,6 @@ export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as {
     contractSource?: string;
     source?: string;
-    llmBaseUrl?: string;
   } | null;
   const contractSource = body?.contractSource || body?.source || "";
 
@@ -76,7 +75,6 @@ ${contractSource}`
         maxTokens: 4000,
         timeoutMs: 90_000,
         retries: 0,
-        baseUrl: body?.llmBaseUrl
       }
     );
 

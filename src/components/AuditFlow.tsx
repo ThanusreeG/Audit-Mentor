@@ -93,7 +93,7 @@ export default function AuditFlow({
     const response = await apiFetch("/api/summary", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sessionId, summary, ...getLlmSettings() })
+      body: JSON.stringify({ sessionId, summary })
     });
     const data = await response.json();
     if (!response.ok || !data.ok) {
@@ -115,7 +115,6 @@ export default function AuditFlow({
         sessionId,
         vulnerabilityOrdinal: activeVulnerabilityOrdinal,
         level,
-        ...getLlmSettings()
       })
     });
     const data = await response.json();
@@ -162,7 +161,6 @@ export default function AuditFlow({
           vulnerabilityOrdinal: activeVulnerabilityOrdinal,
           hintLevel,
           userInput: trimmed,
-          ...getLlmSettings()
         })
       });
       const data = await response.json();
@@ -264,7 +262,7 @@ export default function AuditFlow({
     const response = await apiFetch("/api/report", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sessionId, ...getLlmSettings() })
+      body: JSON.stringify({ sessionId })
     });
     const data = await response.json();
     setIsLoading(false);
@@ -595,13 +593,6 @@ function VerdictCard({ verdict, loading }: { verdict: Verdict | null; loading: b
 
 function Loading({ label }: { label: string }) {
   return <div className="rounded-lg border border-white/10 bg-surface p-6 text-sm text-muted">{label}</div>;
-}
-
-function getLlmSettings() {
-  if (typeof window === "undefined") return {};
-  return {
-    llmBaseUrl: window.localStorage.getItem("llmBaseUrl") || undefined
-  };
 }
 
 function featureRows(features: FeatureFlags, lineCount: number) {

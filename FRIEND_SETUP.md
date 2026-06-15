@@ -104,7 +104,7 @@ NEXT_PUBLIC_API_BASE_URL=https://YOUR_BACKEND_TUNNEL
 PAGES_BASE_PATH=/YOUR_REPO
 ```
 
-The frontend header also has a Backend status button where you can change the API URL after deployment.
+The frontend header shows backend reachability, but users cannot change the API URL after deployment. Update `NEXT_PUBLIC_API_BASE_URL` in GitHub variables and redeploy when the tunnel URL changes.
 
 ### Option B: Full-stack hosting
 

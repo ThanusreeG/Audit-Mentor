@@ -15,8 +15,7 @@ export async function GET(request: Request) {
   }
 
   const started = Date.now();
-  const url = new URL(request.url);
-  const baseUrl = url.searchParams.get("baseUrl") || undefined;
+  void request.url;
   const model = REQUIRED_LLM_MODEL;
   const result = await callLLM(
     [
@@ -31,7 +30,7 @@ function withdraw(uint256 amount) external { msg.sender.call{value: amount}("");
 Generate hint level 1.`
       }
     ],
-    { route: "/api/health/llm", temperature: 0.3, maxTokens: 512, timeoutMs: 20_000, baseUrl }
+    { route: "/api/health/llm", temperature: 0.3, maxTokens: 512, timeoutMs: 20_000 }
   );
 
   if (result.ok) return NextResponse.json({ ok: true, model, latencyMs: result.latencyMs });
