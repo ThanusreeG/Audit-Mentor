@@ -29,7 +29,7 @@ export type AnalysisArtifact = {
   riskScore: number;
   features: Record<string, boolean>;
   lineCount: number;
-  analysisMode: "llm" | "local-fallback";
+  analysisMode: "llm" | "llm-aggregate" | "cache-hit" | "local-fallback";
   riskReasonCategories: string[];
   hiddenFindingCount: number;
   vulnerabilities: AnalysisArtifactFinding[];

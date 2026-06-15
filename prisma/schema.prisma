@@ -10,14 +10,28 @@ datasource db {
 model AuditSession {
   id              String           @id @default(cuid())
   createdAt       DateTime         @default(now())
+  contractHash    String?
   contractSource  String
   contractType    String?
   riskScore       Float?
   riskReasons     String?
   detectedSignals String?
   userSummary     String?
+  analysisCacheId String?
+  analysisCache   AnalysisCache?   @relation(fields: [analysisCacheId], references: [id], onDelete: SetNull)
   vulnerabilities Vulnerability[]
   attempts        GuessAttempt[]
+}
+
+model AnalysisCache {
+  id             String         @id @default(cuid())
+  contractHash   String         @unique
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  contractSource String
+  analysisMode   String
+  responseJson   String
+  sessions       AuditSession[]
 }
 
 model Vulnerability {
