@@ -107,7 +107,7 @@ NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:3000 npm run build:frontend
 If deploying to a project GitHub Pages URL like `https://YOUR_USERNAME.github.io/YOUR_REPO/`, set the base path:
 
 ```bash
-GITHUB_PAGES_BASE_PATH=/YOUR_REPO NEXT_PUBLIC_API_BASE_URL=https://YOUR_BACKEND_TUNNEL npm run build:frontend
+PAGES_BASE_PATH=/YOUR_REPO NEXT_PUBLIC_API_BASE_URL=https://YOUR_BACKEND_TUNNEL npm run build:frontend
 ```
 
 The static files are written to `out/`.
@@ -116,7 +116,7 @@ GitHub Pages deployment is configured in `.github/workflows/deploy-frontend.yml`
 
 ```text
 NEXT_PUBLIC_API_BASE_URL=https://YOUR_BACKEND_TUNNEL
-GITHUB_PAGES_BASE_PATH=/YOUR_REPO
+PAGES_BASE_PATH=/YOUR_REPO
 ```
 
 The app also has a "Backend" status button in the header, so you can change the API base URL in the browser without rebuilding the frontend.

@@ -94,14 +94,14 @@ NEXT_PUBLIC_API_BASE_URL=https://YOUR_BACKEND_TUNNEL npm run build:frontend
 For a project Pages URL such as `https://YOUR_USERNAME.github.io/YOUR_REPO/`, include:
 
 ```bash
-GITHUB_PAGES_BASE_PATH=/YOUR_REPO NEXT_PUBLIC_API_BASE_URL=https://YOUR_BACKEND_TUNNEL npm run build:frontend
+PAGES_BASE_PATH=/YOUR_REPO NEXT_PUBLIC_API_BASE_URL=https://YOUR_BACKEND_TUNNEL npm run build:frontend
 ```
 
 The GitHub Pages workflow is already included at `.github/workflows/deploy-frontend.yml`. In the GitHub repository, set these repository variables before running it if applicable:
 
 ```text
 NEXT_PUBLIC_API_BASE_URL=https://YOUR_BACKEND_TUNNEL
-GITHUB_PAGES_BASE_PATH=/YOUR_REPO
+PAGES_BASE_PATH=/YOUR_REPO
 ```
 
 The frontend header also has a Backend status button where you can change the API URL after deployment.

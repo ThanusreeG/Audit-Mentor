@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const isStaticExport = process.env.NEXT_STATIC_EXPORT === "true";
-const basePath = process.env.GITHUB_PAGES_BASE_PATH || "";
+const basePath = process.env.PAGES_BASE_PATH || "";
 
 const nextConfig = {
   ...(isStaticExport
