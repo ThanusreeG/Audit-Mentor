@@ -9,7 +9,11 @@ export function apiUrl(path: string) {
 }
 
 export function apiFetch(path: string, init?: RequestInit) {
-  return fetch(apiUrl(path), init);
+  const headers = new Headers(init?.headers);
+  if (API_BASE_URL.includes("ngrok-free.app")) {
+    headers.set("ngrok-skip-browser-warning", "true");
+  }
+  return fetch(apiUrl(path), { ...init, headers });
 }
 
 function normalizeBaseUrl(value: string) {
